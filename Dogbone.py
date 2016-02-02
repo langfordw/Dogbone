@@ -87,6 +87,9 @@ def run(context):
 
                 boolInp = inputs.addBoolValueInput("yup", "Y-Up", True)
                 boolInp.initialValue = False
+                
+                boolInp2 = inputs.addBoolValueInput("ra", "Right Angles Only", True)
+                boolInp2.initialValue = True
 
                 # Connect up to command related events.
                 onExecute = CommandExecutedHandler()
@@ -118,6 +121,8 @@ def run(context):
                             offStr = input.expression
                         elif input.id == 'yup':
                             yup = input.value
+                        elif input.id == 'ra':
+                            ra = input.value
                         elif input.id == 'Select':                                                
                             edges = []
                             bodies = []                            
@@ -141,12 +146,18 @@ def run(context):
                                         
                                 # Check if edge is vertical
                                 if isVertical(bodyEdge, yup):
-
-                                    # Check if its an internal edge
-                                    if (getAngleBetweenFaces(bodyEdge) < math.pi ):
-                                                
+                                    
+                                    if (ra):
+                                        # Check if its an internal edge
+                                        if (getAngleBetweenFaces(bodyEdge) == math.pi/2.0 ):
                                                 # Add edge to the selection 
                                                 edges.append(bodyEdge)
+                                    else:
+                                        # Check if its an internal edge
+                                        if (getAngleBetweenFaces(bodyEdge) < math.pi ):
+                                                # Add edge to the selection 
+                                                edges.append(bodyEdge)
+                                        
 
                     startIndex, endIndex = None, None
                     # Create a dogbone for each edge specified
