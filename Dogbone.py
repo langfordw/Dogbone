@@ -149,9 +149,11 @@ def run(context):
                                     
                                     if (ra):
                                         # Check if its an internal edge
-                                        if (getAngleBetweenFaces(bodyEdge) == math.pi/2.0 ):
-                                                # Add edge to the selection 
-                                                edges.append(bodyEdge)
+                                        if (getAngleBetweenFaces(bodyEdge) < math.pi ):
+                                            # Check if its a 90 degree edge
+                                            if (abs(getAngleBetweenFaces(bodyEdge)-math.pi/2.0) < 0.0001 ):
+                                                    # Add edge to the selection 
+                                                    edges.append(bodyEdge)
                                     else:
                                         # Check if its an internal edge
                                         if (getAngleBetweenFaces(bodyEdge) < math.pi ):
